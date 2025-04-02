@@ -48,7 +48,7 @@ Go to main directory
 1.Activate the Environment:
    >myenv/Scripts/activate
 2.Install dependencies:
-   >pip install requirenements.txt
+   >pip install -r requirenements.txt
 3.Run the server:      
    >python manage.py runserver
 
