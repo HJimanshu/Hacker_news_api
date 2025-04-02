@@ -3,13 +3,17 @@ import requests
 from django.http import JsonResponse
 from datetime import datetime
 import logging
+from dotenv import load_dotenv
+import os
 # Create your views here.
+load_dotenv()
+Api_Url=os.getenv('Hacher_News_API')
 
 logger = logging.getLogger(__name__)
 def fetch_hackernews_api_data(request):
     try:
         logger.info("Fetching top stories from Hacker News API.")
-        response=requests.get('https://hacker-news.firebaseio.com/v0/topstories.json')
+        response=requests.get(Api_Url)
         story_id=response.json()[:10]
         print(story_id)
         logger.info(f"Fetched top 10 story IDs: {story_id}")
