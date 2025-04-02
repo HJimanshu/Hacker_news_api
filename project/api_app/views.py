@@ -21,16 +21,17 @@ def fetch_hackernews_api_data(request):
         for i in story_id:
             stories_data_get=requests.get(f'https://hacker-news.firebaseio.com/v0/item/{i}.json')
             data=stories_data_get.json()
-            timestamp=data.get('time','xx:xx:xx')
-            readable_time=datetime.fromtimestamp(timestamp).strftime("%B %d, %Y - %I:%M %p")
-            print(data,"json data")
-            story_list=    {  
-                'title': data.get('title', 'No Title'),
-                'author': data.get('by', 'Unknown'),
-                'url': data.get('url', '#'),
-                'score': data.get('score', 0),
-                'time':readable_time
-                }
+            if isinstance(data, dict):
+              timestamp=data.get('time','xx:xx:xx')
+              readable_time=datetime.fromtimestamp(timestamp).strftime("%B %d, %Y - %I:%M %p")
+              print(data,"json data")
+              story_list=    {  
+                 'title': data.get('title', 'No Title'),
+                 'author': data.get('by', 'Unknown'),
+                 'url': data.get('url', '#'),
+                 'score': data.get('score', 0),
+                 'time':readable_time
+                 }
             stories_data.append(story_list)
             logger.info(f"Fetched story: {story_list}")
         return JsonResponse({'data':stories_data},status=200)
